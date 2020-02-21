@@ -38,7 +38,7 @@ class Customer extends React.Component<Props, State> {
                         if (editing) {
                             return <li style={{fontSize: "20px"}} key={customer.id}>
                                 {index + 1}.
-                                <form onSubmit={() => this.saveEdit(editing)}>
+                                <form onSubmit={(event) => this.saveEdit(editing, event)}>
                                     <input type="text" value={editing.prename} onChange={(event) => this.onEdit(editing, { prename: event.target.value })}/>
                                     <input type="text" value={editing.surname} onChange={(event) => this.onEdit(editing, { surname: event.target.value })}/>
                                     <input type="submit" value="Save" />
@@ -83,14 +83,18 @@ class Customer extends React.Component<Props, State> {
         })
     }
 
-    private saveEdit(customer: CustomerInformation): void {
+    private saveEdit(customer: CustomerInformation, event: React.FormEvent): void {
         const currentlyEditing = this.state.currentlyEditing;
         const index = currentlyEditing.findIndex((e) => e.id === customer.id);
         currentlyEditing.splice(index, 1);
+        
         this.setState({
             currentlyEditing
         });
+
         this.props.saveCustomer(customer);
+
+        event.preventDefault();
     }
 }
 
