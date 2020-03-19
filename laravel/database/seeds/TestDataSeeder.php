@@ -15,10 +15,12 @@ class TestDataSeeder extends Seeder
     public function run(){
 
         $faker = Faker\Factory::create();
-        for ($i = 1; $i <= 1000 ; $i++){
+        $total = 1000;
+        for ($i = 1; $i <= $total ; $i++){
             $customer = new Customer;
             $customer->name = $faker->name;
             $customer->save();
+            echo $i, '/', $total . PHP_EOL;
 
             for ($k = 0; $k < 10; $k++){
                 $order = new Order();
