@@ -1,4 +1,5 @@
-FROM php:7.4-cli
+# setting the direct debian version to avoid accidential breaking updates
+FROM php:7.4-cli-buster
 COPY . /var/www
 WORKDIR /var/www
 RUN apt-get update && apt-get install -y \
@@ -14,6 +15,8 @@ RUN apt-get update && apt-get install -y \
     unzip \
     git \
     curl
+# Additional Libraries that are missing in debian buster but needed for mbstring and zip
+RUN apt-get install -y libonig-dev libzip-dev
 RUN docker-php-ext-install pdo_mysql mbstring zip exif pcntl
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN composer install
