@@ -1,6 +1,6 @@
 ```
 docker-compose up
-docker exec laravel -it bash
+docker exec -it laravel bash
 php artisan key:generate
 php artisan migrate
 php artisan db:seed --class=TestDataSeeder
